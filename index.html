@@ -13,7 +13,7 @@
       justify-content: center;
       min-height: 100vh;
       margin: 0;
-      padding: 20px;
+      padding: 16px;
       background-color: #121212;
       color: #ffffff;
       text-align: center;
@@ -22,13 +22,25 @@
     .card {
       background: #1e1e1e;
       padding: 24px;
-      border-radius: 16px;
+      border-radius: 18px;
       width: 100%;
-      max-width: 340px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      max-width: 350px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
     }
-    h3 { margin: 0 0 8px 0; }
-    p { color: #aaaaaa; font-size: 14px; margin-bottom: 20px; }
+    h3 { margin: 0 0 4px 0; font-size: 20px; }
+    .upi-id { color: #a29bfe; font-size: 14px; margin-bottom: 16px; font-family: monospace; }
+    .qr-box {
+      background: #ffffff;
+      padding: 12px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+    .qr-box img {
+      width: 200px;
+      height: 200px;
+      display: block;
+    }
     .btn {
       display: block;
       width: 100%;
@@ -45,34 +57,33 @@
       cursor: pointer;
     }
     .btn-secondary { background-color: #2d2d2d; }
+    .hint { font-size: 12px; color: #888888; margin-top: 8px; }
   </style>
   <script>
-    const params = "pa=malharmalisetti@naviaxis&pn=MALISETTI%20VENKATA%20MALHAR&cu=INR";
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    if (!isIOS) {
-      // Auto-launch UPI chooser on Android
-      window.location.replace("upi://pay?" + params);
-    }
-    function copyUPI() {
+    function copyAndOpen() {
       navigator.clipboard.writeText("malharmalisetti@naviaxis");
-      document.getElementById("copyBtn").innerText = "Copied: malharmalisetti@naviaxis!";
+      const btn = document.getElementById("copyBtn");
+      btn.innerText = "✅ Copied UPI ID! Now open any UPI app";
+      btn.style.backgroundColor = "#00b894";
     }
   </script>
 </head>
 <body>
   <div class="card">
-    <h3>Pay Malhar Malisetti</h3>
-    <p>malharmalisetti@naviaxis</p>
-    
-    <!-- Works on all Android UPI apps -->
-    <a class="btn" href="upi://pay?pa=malharmalisetti@naviaxis&pn=MALISETTI%20VENKATA%20MALHAR&cu=INR">Open UPI App (Android)</a>
-    
-    <!-- Specific app buttons that work on both iPhone & Android -->
-    <a class="btn btn-secondary" href="tez://upi/pay?pa=malharmalisetti@naviaxis&pn=MALISETTI%20VENKATA%20MALHAR&cu=INR">Pay with Google Pay</a>
-    <a class="btn btn-secondary" href="phonepe://pay?pa=malharmalisetti@naviaxis&pn=MALISETTI%20VENKATA%20MALHAR&cu=INR">Pay with PhonePe</a>
-    <a class="btn btn-secondary" href="paytmmp://pay?pa=malharmalisetti@naviaxis&pn=MALISETTI%20VENKATA%20MALHAR&cu=INR">Pay with Paytm</a>
-    
-    <button id="copyBtn" class="btn btn-secondary" onclick="copyUPI()">Copy UPI ID</button>
+    <h3>Malhar Malisetti</h3>
+    <div class="upi-id">malharmalisetti@naviaxis</div>
+
+    <div class="qr-box">
+      <img src="qr.png" alt="UPI QR Code">
+    </div>
+
+    <!-- 1-Tap Copy (Never blocked by NPCI) -->
+    <button id="copyBtn" class="btn" onclick="copyAndOpen()">📋 Copy UPI ID to Pay</button>
+
+    <!-- Direct App Intent Link (Works on supported apps) -->
+    <a class="btn btn-secondary" href="upi://pay?pa=malharmalisetti@naviaxis&pn=MALISETTI%20VENKATA%20MALHAR&cu=INR&mode=02&purpose=00">⚡ Open UPI App Directly</a>
+
+    <div class="hint">If direct app opening fails due to bank security limits, copy the UPI ID above or screenshot the QR code.</div>
   </div>
 </body>
 </html>
